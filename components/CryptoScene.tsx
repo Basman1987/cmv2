@@ -22,7 +22,16 @@ function CryptoToken() {
   )
 }
 
-function FloatingNFT({ position, rotation }) {
+// Define proper types for position and rotation
+type Vector3 = [number, number, number]
+type Euler = [number, number, number]
+
+interface FloatingNFTProps {
+  position: Vector3
+  rotation: Euler
+}
+
+function FloatingNFT({ position, rotation }: FloatingNFTProps) {
   return (
     <Float speed={1} rotationIntensity={0.5} floatIntensity={0.5}>
       <mesh position={position} rotation={rotation} scale={0.2}>

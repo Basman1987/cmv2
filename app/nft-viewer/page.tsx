@@ -29,7 +29,7 @@ export default function NFTViewer() {
       setError(null)
 
       try {
-        if (typeof window.ethereum !== "undefined") {
+        if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
           const provider = new ethers.BrowserProvider(window.ethereum)
 
           // Fetch NFTs from both collections

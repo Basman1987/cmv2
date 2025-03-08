@@ -92,7 +92,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   })
 
   const getProvider = useCallback(() => {
-    if (typeof window !== "undefined" && window.ethereum) {
+    if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
       return new ethers.BrowserProvider(window.ethereum)
     }
     return null
@@ -145,7 +145,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       return ids
     } catch (error) {
       console.error("Error fetching NFT balance:", error)
-      if (error.message.includes("missing revert data")) {
+      if (error.message && error.message.includes("missing revert data")) {
         console.log("Contract might not support balanceOf or tokenOfOwnerByIndex. Assuming no owned NFTs.")
         return []
       }
@@ -282,7 +282,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   )
 
   const connectWallet = useCallback(async () => {
-    if (typeof window !== "undefined" && window.ethereum) {
+    if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
       try {
         setIsLoading(true)
         setError(null)
@@ -357,7 +357,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   useEffect(() => {
     const checkConnection = async () => {
       const savedConnectionState = localStorage.getItem("walletConnected")
-      if (savedConnectionState === "true" && typeof window !== "undefined" && window.ethereum) {
+      if (savedConnectionState === "true" && typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
         try {
           const provider = new ethers.BrowserProvider(window.ethereum)
           const accounts = await provider.listAccounts()

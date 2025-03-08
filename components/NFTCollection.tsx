@@ -98,7 +98,7 @@ function NFTCard({ nft, isArcane }: { nft: NFTMetadata; isArcane: boolean }) {
 // Memoize NFTCard to prevent unnecessary re-renders
 const MemoizedNFTCard = React.memo(NFTCard)
 
-function NFTCollectionContent({ title, tokenIds, isArcane }: NFTCollectionProps) {
+function NFTCollectionContent({ title, tokenIds, isArcane = false }: NFTCollectionProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [nfts, setNfts] = useState<NFTMetadata[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -205,7 +205,7 @@ function NFTCollectionContent({ title, tokenIds, isArcane }: NFTCollectionProps)
               </div>
             ))
           : // Loaded NFTs
-            nfts.map((nft) => <MemoizedNFTCard key={nft.id} nft={nft} isArcane={isArcane} />)}
+            nfts.map((nft) => <MemoizedNFTCard key={nft.id} nft={nft} isArcane={!!isArcane} />)}
       </div>
 
       {totalPages > 1 && (

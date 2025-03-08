@@ -68,10 +68,10 @@ export const switchToCronosNetwork = async (testnet = false) => {
 
 export const isCronosNetwork = async (testnet = false) => {
   if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const provider = new ethers.BrowserProvider(window.ethereum)
     const network = await provider.getNetwork()
     const expectedChainId = Number.parseInt(testnet ? CRONOS_TESTNET.chainId : CRONOS_MAINNET.chainId, 16)
-    return network.chainId === expectedChainId
+    return network.chainId === BigInt(expectedChainId)
   }
   return false
 }

@@ -145,7 +145,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       return ids
     } catch (error) {
       console.error("Error fetching NFT balance:", error)
-      if (error.message && error.message.includes("missing revert data")) {
+      if (error instanceof Error && error.message && error.message.includes("missing revert data")) {
         console.log("Contract might not support balanceOf or tokenOfOwnerByIndex. Assuming no owned NFTs.")
         return []
       }

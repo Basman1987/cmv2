@@ -26,7 +26,7 @@ export const CRONOS_TESTNET = {
 
 export const addCronosNetwork = async (testnet = false) => {
   const network = testnet ? CRONOS_TESTNET : CRONOS_MAINNET
-  if (typeof window.ethereum !== "undefined") {
+  if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
     try {
       await window.ethereum.request({
         method: "wallet_addEthereumChain",
@@ -45,14 +45,14 @@ export const addCronosNetwork = async (testnet = false) => {
 
 export const switchToCronosNetwork = async (testnet = false) => {
   const chainId = testnet ? CRONOS_TESTNET.chainId : CRONOS_MAINNET.chainId
-  if (typeof window.ethereum !== "undefined") {
+  if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId }],
       })
       return true
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 4902) {
         return addCronosNetwork(testnet)
       } else {
@@ -67,7 +67,7 @@ export const switchToCronosNetwork = async (testnet = false) => {
 }
 
 export const isCronosNetwork = async (testnet = false) => {
-  if (typeof window.ethereum !== "undefined") {
+  if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const network = await provider.getNetwork()
     const expectedChainId = Number.parseInt(testnet ? CRONOS_TESTNET.chainId : CRONOS_MAINNET.chainId, 16)

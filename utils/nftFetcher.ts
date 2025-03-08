@@ -103,7 +103,7 @@ export const fetchOwnedNFTs = async (
 
     console.log(`Found ${ownedTokens.length} owned tokens:`, ownedTokens)
     return [...new Set(ownedTokens)] // Remove any duplicates
-  } catch (error) {
+  } catch (error: any) {
     if (error.code === "CALL_EXCEPTION") {
       console.log("Contract call exception, possibly incompatible contract. Returning empty array.")
       return []

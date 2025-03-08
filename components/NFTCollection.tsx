@@ -143,7 +143,7 @@ function NFTCollectionContent({ title, tokenIds, isArcane }: NFTCollectionProps)
         await new Promise((resolve) => setTimeout(resolve, 100))
       }
     } catch (error) {
-      if (error.name === "AbortError") {
+      if (error instanceof Error && error.name === "AbortError") {
         console.log("Fetch aborted")
       } else {
         console.error("Error loading NFTs:", error)

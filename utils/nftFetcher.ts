@@ -81,8 +81,9 @@ export const fetchOwnedNFTs = async (
           const uniqueTokenIds = new Set(events.map((event) => Number(event.topics[3])))
           console.log("Found token IDs from events:", Array.from(uniqueTokenIds))
 
-          // Verify ownership
-          for (const tokenId of uniqueTokenIds) {
+          // Verify ownership - Convert Set to Array before iterating
+          const tokenIdsArray = Array.from(uniqueTokenIds)
+          for (const tokenId of tokenIdsArray) {
             try {
               const currentOwner = await contract.ownerOf(tokenId)
               if (currentOwner.toLowerCase() === ownerAddress.toLowerCase()) {
